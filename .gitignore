@@ -1,0 +1,50 @@
+# Go binaries and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries
+*.test
+
+# Coverage and test outputs
+*.out
+coverage*.out
+cover*.out
+profile*.out
+
+# Dependency directory (uncomment if you vendor deps)
+
+# OS / Editor files
+.DS_Store
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*~
+
+# Logs
+*.log
+
+# Docker / Compose env files
+.env
+
+# Archives
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz
+*.tbz2
+*.tar.xz
+*.txz
+*.tar.zst
+*.tzst
+*.gz
+*.bz2
+*.xz
+*.zst
