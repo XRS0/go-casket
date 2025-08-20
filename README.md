@@ -85,33 +85,3 @@ Usage output:
 ```
 Usage: example <archive> <destDir> [password]
 ```
-
-## Docker / Compose
-- Build image and run:
-```bash
-docker build -t go-casket .
-docker run --rm -v "$PWD:/work" -w /work go-casket /work/archive.7z /work/out
-# with password
-docker run --rm -v "$PWD:/work" -w /work go-casket /work/archive.7z /work/out mySecret
-```
-- docker-compose (included as `docker-compose.yml`):
-```bash
-# defaults to /work/sample.7z -> /work/out
-docker compose up --build
-# custom paths
-docker compose run --rm go-casket /work/archive.7z /work/out
-# with password
-docker compose run --rm go-casket /work/archive.7z /work/out mySecret
-```
-
-## Security note on passwords
-Password is passed to external tools via command-line flag (`-p`), which might be visible in process listings. Ensure your environment is trusted.
-
-## Notes
-- 7z command used: `7z x -y -o<outdir> -- <archive>`
-- 7zz behaves the same for these flags and is preferred when present
-- unrar command used: `unrar x -o+ <archive> <outdir>`
-- Environment set `LC_ALL=C` to avoid localized prompts
-
-## License
-MIT
