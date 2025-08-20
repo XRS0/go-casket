@@ -1,0 +1,14 @@
+services:
+  go-casket:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: go-casket:local
+    working_dir: /work
+    volumes:
+      - ./:/work
+    environment:
+      - CASKET_PASSWORD
+    # Передайте архив и папку назначения через переменные окружения или параметрами при запуске
+    # По умолчанию пытается распаковать /work/sample.7z в /work/out
+    command: ["${ARCHIVE:-/work/sample.7z}", "${DEST:-/work/out}"]
