@@ -132,8 +132,20 @@ func mapSevenZType(t tools.ArchiveHeader_ArchiveType) string {
 		return "Rar"
 	case tools.ArchiveHeader_ArchiveType__SevenZ:
 		return "7z"
+	case tools.ArchiveHeader_ArchiveType__Gzip:
+		return "GZip"
+	case tools.ArchiveHeader_ArchiveType__Bzip2:
+		return "BZip2"
+	case tools.ArchiveHeader_ArchiveType__Xz:
+		return "XZ"
+	case tools.ArchiveHeader_ArchiveType__Cab:
+		return "Cab"
+	case tools.ArchiveHeader_ArchiveType__Arj:
+		return "Arj"
 	case tools.ArchiveHeader_ArchiveType__Tar:
 		return "Tar"
+	case tools.ArchiveHeader_ArchiveType__Unknown:
+		fallthrough
 	default:
 		return ""
 	}
