@@ -1,18 +1,18 @@
-# -- Example Dockerfile for go-casket --
-FROM golang:1.22-alpine AS builder
+# Simple dev Dockerfile (Alpine-based, smaller than Debian Bookworm)
+FROM golang:1.22-alpine
 
-# --- Build stage ---
-WORKDIR /src
-COPY . .
-RUN go build -o /casket-example ./cmd/example
-
-# --- Runtime stage ---
-FROM alpine:3.20
-RUN apk add --no-cache ca-certificates p7zip unrar && update-ca-certificates
+# Install tools: 7zip (7zz) and p7zip (7z)
+RUN apk add --no-cache ca-certificates 7zip p7zip procps \
+ && update-ca-certificates \
+ && command -v 7zz >/dev/null \
+ && command -v 7z >/dev/null
 
 WORKDIR /work
-COPY --from=builder /casket-example /usr/local/bin/casket-example
+COPY . .
 
-ENTRYPOINT ["casket-example"]
-# Default args for quick test (override when running)
-CMD ["/work/sample.7z", "/work/out"]
+# Build example CLI
+RUN go mod download \
+ && CGO_ENABLED=0 go build -o /usr/local/bin/casket-example ./cmd/example
+
+# Keep container running for interactive work (BusyBox sleep has no "infinity")
+CMD ["tail", "-f", "/dev/null"]
