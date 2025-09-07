@@ -24,7 +24,7 @@ type Options struct {
 	// Password for encrypted archives (7z/zip/rar). Empty means no password is passed.
 	Password string
 	// Ignore corrupted files and checksum mistakes
-	ignoreErrors bool
+	IgnoreErrors bool
 }
 
 // DefaultOptions returns sensible defaults.

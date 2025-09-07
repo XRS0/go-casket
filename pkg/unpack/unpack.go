@@ -38,7 +38,7 @@ func UnpackContext(ctx context.Context, archivePath, destDir string, opts Option
 	}
 
 	use7z := is7z(exe)
-	args := buildArgs(use7z, archivePath, destDir, opts.Overwrite, opts.Password, sevenZType, opts.ignoreErrors)
+	args := buildArgs(use7z, archivePath, destDir, opts.Overwrite, opts.Password, sevenZType, opts.IgnoreErrors)
 
 	// Apply timeout if provided and no deadline is set yet.
 	if opts.Timeout > 0 && ctx.Err() == nil {
@@ -50,7 +50,7 @@ func UnpackContext(ctx context.Context, archivePath, destDir string, opts Option
 	// If detected RAR, prefer unrar when available, else use 7z with -tRar. If 7z fails, try unrar as fallback.
 	if atype == tools.ArchiveHeader_ArchiveType__Rar4 || atype == tools.ArchiveHeader_ArchiveType__Rar5 {
 		if unrarExe, lookErr := exec.LookPath(string(ToolUnrar)); lookErr == nil {
-			urArgs := buildArgs(false, archivePath, destDir, opts.Overwrite, opts.Password, "", opts.ignoreErrors)
+			urArgs := buildArgs(false, archivePath, destDir, opts.Overwrite, opts.Password, "", opts.IgnoreErrors)
 			if err := runTool(ctx, unrarExe, urArgs, destDir, opts.WorkDir, stdout, stderr); err != nil {
 				return fmt.Errorf("extract failed with unrar: %w", err)
 			}
@@ -64,7 +64,7 @@ func UnpackContext(ctx context.Context, archivePath, destDir string, opts Option
 		// Fallback: if 7z/7zz failed and archive is RAR, try unrar when available
 		if use7z && (atype == tools.ArchiveHeader_ArchiveType__Rar4 || atype == tools.ArchiveHeader_ArchiveType__Rar5) {
 			if unrarExe, lookErr := exec.LookPath(string(ToolUnrar)); lookErr == nil {
-				fallbackArgs := buildArgs(false, archivePath, destDir, opts.Overwrite, opts.Password, "", opts.ignoreErrors)
+				fallbackArgs := buildArgs(false, archivePath, destDir, opts.Overwrite, opts.Password, "", opts.IgnoreErrors)
 				if fbErr := runTool(ctx, unrarExe, fallbackArgs, destDir, opts.WorkDir, stdout, stderr); fbErr == nil {
 					return nil
 				}
