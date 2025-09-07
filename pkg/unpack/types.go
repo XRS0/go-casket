@@ -23,6 +23,8 @@ type Options struct {
 	WorkDir string
 	// Password for encrypted archives (7z/zip/rar). Empty means no password is passed.
 	Password string
+	// Ignore corrupted files and checksum mistakes
+	ignoreErrors bool
 }
 
 // DefaultOptions returns sensible defaults.
