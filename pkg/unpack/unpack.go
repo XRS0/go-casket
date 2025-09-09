@@ -128,8 +128,10 @@ func mapSevenZType(t tools.ArchiveHeader_ArchiveType) string {
 	switch t {
 	case tools.ArchiveHeader_ArchiveType__Zip:
 		return "Zip"
-	case tools.ArchiveHeader_ArchiveType__Rar4, tools.ArchiveHeader_ArchiveType__Rar5:
+	case tools.ArchiveHeader_ArchiveType__Rar4:
 		return "Rar"
+	case tools.ArchiveHeader_ArchiveType__Rar5:
+		return ""
 	case tools.ArchiveHeader_ArchiveType__SevenZ:
 		return "7z"
 	case tools.ArchiveHeader_ArchiveType__Gzip:

@@ -1,11 +1,13 @@
 package unpack
 
-import "path/filepath"
+import (
+	"path/filepath"
+)
 
 // buildArgs returns the command-line args for the chosen tool.
 func buildArgs(use7z bool, archivePath, destDir string, overwrite bool, password string, sevenZType string, ignoreErrors bool) []string {
 	if use7z {
-		// 7z/7zz: x -y -o<dir> [-t<Type>] -p<PASS> <archive>
+		// 7z/7zz: x -y -o<dir> -bb0 [-t<Type>] -p<PASS> <archive>
 		args := []string{"x"}
 		if overwrite {
 			args = append(args, "-y")
@@ -13,6 +15,9 @@ func buildArgs(use7z bool, archivePath, destDir string, overwrite bool, password
 		args = append(args, "-o"+destDir)
 		if sevenZType != "" {
 			args = append(args, "-t"+sevenZType)
+		}
+		if ignoreErrors {
+			args = append(args, "-bb0", "-bso0", "-bse0", "-bsp0")
 		}
 		if password != "" {
 			args = append(args, "-p"+password)

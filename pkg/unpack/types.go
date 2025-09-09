@@ -30,8 +30,9 @@ type Options struct {
 // DefaultOptions returns sensible defaults.
 func DefaultOptions() Options {
 	return Options{
-		Preferred: []Tool{Tool7zz, Tool7z, ToolUnrar},
-		Overwrite: true,
-		Timeout:   0,
+		Preferred:    []Tool{Tool7zz, Tool7z, ToolUnrar},
+		Overwrite:    true,
+		IgnoreErrors: true,
+		Timeout:      0,
 	}
 }
