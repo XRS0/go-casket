@@ -1,18 +1,23 @@
-# Simple dev Dockerfile (Alpine-based, smaller than Debian Bookworm)
-FROM golang:1.22-alpine
-
-# Install tools: 7zip (7zz) and p7zip (7z)
-RUN apk add --no-cache ca-certificates 7zip p7zip procps \
- && update-ca-certificates \
- && command -v 7zz >/dev/null \
- && command -v 7z >/dev/null
+FROM golang:1.22-bookworm AS builder
 
 WORKDIR /work
 COPY . .
 
-# Build example CLI
 RUN go mod download \
- && CGO_ENABLED=0 go build -o /usr/local/bin/casket-example ./cmd/example
+	&& CGO_ENABLED=0 go build -o /usr/local/bin/casket-example ./cmd/example
 
-# Keep container running for interactive work (BusyBox sleep has no "infinity")
+RUN apt-get update \
+	&& apt-get install -y --no-install-recommends \
+	ca-certificates \
+	curl \
+	procps \
+	xz-utils \
+	&& rm -rf /var/lib/apt/lists/*
+
+# Скачиваем и распаковываем свежий 7zz (25.01)
+RUN curl -L https://7-zip.org/a/7z2501-linux-arm64.tar.xz -o /tmp/7z.tar.xz \
+	&& tar -C /usr/local/bin -xf /tmp/7z.tar.xz \
+	&& rm /tmp/7z.tar.xz \
+	&& chmod +x /usr/local/bin/7zz
+
 CMD ["tail", "-f", "/dev/null"]

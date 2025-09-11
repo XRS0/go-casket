@@ -23,13 +23,16 @@ type Options struct {
 	WorkDir string
 	// Password for encrypted archives (7z/zip/rar). Empty means no password is passed.
 	Password string
+	// Ignore corrupted files and checksum mistakes
+	IgnoreErrors bool
 }
 
 // DefaultOptions returns sensible defaults.
 func DefaultOptions() Options {
 	return Options{
-		Preferred: []Tool{Tool7zz, Tool7z, ToolUnrar},
-		Overwrite: true,
-		Timeout:   0,
+		Preferred:    []Tool{Tool7zz, Tool7z, ToolUnrar},
+		Overwrite:    true,
+		IgnoreErrors: true,
+		Timeout:      0,
 	}
 }
