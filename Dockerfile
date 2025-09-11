@@ -15,7 +15,7 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Скачиваем и распаковываем свежий 7zz (25.01)
-RUN curl -L https://7-zip.org/a/7z2501-linux-arm64.tar.xz -o /tmp/7z.tar.xz \
+RUN curl -L https://7-zip.org/a/7z2501-linux-x64.tar.xz -o /tmp/7z.tar.xz \
 	&& tar -C /usr/local/bin -xf /tmp/7z.tar.xz \
 	&& rm /tmp/7z.tar.xz \
 	&& chmod +x /usr/local/bin/7zz
